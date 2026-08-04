@@ -1,0 +1,37 @@
+{
+  "versao_schema": "2.0",
+  "classificadoras": {
+    "BV": {
+      "classes_tubulacao": [
+        {"classe": "I",   "pressao_bar_min": 16,  "temperatura_c_min": 300},
+        {"classe": "II",  "pressao_bar_min": 7,   "temperatura_c_min": 170},
+        {"classe": "III", "pressao_bar_min": 0,   "temperatura_c_min": 0}
+      ],
+      "condicoes_inclinacao": {
+        "operacao": {"trim_deg": 5.0,  "banda_deg": 15.0},
+        "avaria":   {"trim_deg": 10.0, "banda_deg": 22.5}
+      },
+      "velocidades_limite_ms": {
+        "agua_salgada": {
+          "succao_min": 0.5, "succao_max": 1.2,
+          "recalque_min": 1.0, "recalque_max": 2.5
+        }
+      }
+    },
+    "LR": {
+      "classes_tubulacao": [
+        {"classe": "I",   "pressao_bar_min": 20,  "temperatura_c_min": 300},
+        {"classe": "II",  "pressao_bar_min": 7,   "temperatura_c_min": 170},
+        {"classe": "III", "pressao_bar_min": 0,   "temperatura_c_min": 0}
+      ],
+      "nota_divergencia": "Classe I LR: P>20 bar vs BV: P>16 bar."
+    },
+    "ABS": {
+      "classes_tubulacao": [
+        {"classe": "I",   "pressao_bar_min": 16,  "temperatura_c_min": 300},
+        {"classe": "II",  "pressao_bar_min": 7,   "temperatura_c_min": 170},
+        {"classe": "III", "pressao_bar_min": 0,   "temperatura_c_min": 0}
+      ]
+    }
+  }
+}

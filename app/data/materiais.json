@@ -1,0 +1,105 @@
+{
+  "versao_schema": "2.0",
+  "materiais": [
+    {
+      "id": "aco_inox_304",
+      "nome": "Aço inoxidável 304/316",
+      "rugosidade_mm": 0.02,
+      "rugosidade_mm_range": [0.015, 0.025],
+      "coeficiente_hw_novo": 145,
+      "coeficiente_hw_usado": 130,
+      "norma_material": "ASTM A312",
+      "uso_naval_tipico": "Água do mar, alimentos"
+    },
+    {
+      "id": "aco_carbono_novo",
+      "nome": "Aço carbono novo",
+      "rugosidade_mm": 0.046,
+      "rugosidade_mm_range": [0.03, 0.06],
+      "coeficiente_hw_novo": 125,
+      "coeficiente_hw_usado": 90,
+      "norma_material": "ASTM A53",
+      "uso_naval_tipico": "Estrutural, lastro"
+    },
+    {
+      "id": "aco_carbono_usado",
+      "nome": "Aço carbono usado",
+      "rugosidade_mm": 0.20,
+      "rugosidade_mm_range": [0.15, 0.30],
+      "coeficiente_hw_novo": 100,
+      "coeficiente_hw_usado": 80,
+      "norma_material": "ASTM A53",
+      "uso_naval_tipico": "Após anos de serviço"
+    },
+    {
+      "id": "aco_galvanizado",
+      "nome": "Aço galvanizado",
+      "rugosidade_mm": 0.15,
+      "rugosidade_mm_range": [0.10, 0.20],
+      "coeficiente_hw_novo": 120,
+      "coeficiente_hw_usado": 100,
+      "norma_material": "ASTM A53",
+      "uso_naval_tipico": "Água doce, lastro"
+    },
+    {
+      "id": "ferro_fundido",
+      "nome": "Ferro fundido",
+      "rugosidade_mm": 0.26,
+      "rugosidade_mm_range": [0.20, 0.35],
+      "coeficiente_hw_novo": 120,
+      "coeficiente_hw_usado": 90,
+      "norma_material": "ASTM A126",
+      "uso_naval_tipico": "Sistemas antigos"
+    },
+    {
+      "id": "cobre",
+      "nome": "Cobre",
+      "rugosidade_mm": 0.0015,
+      "rugosidade_mm_range": [0.001, 0.002],
+      "coeficiente_hw_novo": 135,
+      "coeficiente_hw_usado": 125,
+      "norma_material": "ASTM B88",
+      "uso_naval_tipico": "Refrigeração"
+    },
+    {
+      "id": "cuni_90_10",
+      "nome": "Liga Cu-Ni 90/10",
+      "rugosidade_mm": 0.0015,
+      "rugosidade_mm_range": [0.001, 0.002],
+      "coeficiente_hw_novo": 140,
+      "coeficiente_hw_usado": 130,
+      "norma_material": "EEMUA 144",
+      "uso_naval_tipico": "Água do mar (premium)"
+    },
+    {
+      "id": "cuni_70_30",
+      "nome": "Liga Cu-Ni 70/30",
+      "rugosidade_mm": 0.0015,
+      "rugosidade_mm_range": [0.001, 0.002],
+      "coeficiente_hw_novo": 140,
+      "coeficiente_hw_usado": 130,
+      "norma_material": "EEMUA 144",
+      "uso_naval_tipico": "Água do mar (alta resist.)"
+    },
+    {
+      "id": "pvc_cpvc",
+      "nome": "PVC / CPVC",
+      "rugosidade_mm": 0.0015,
+      "rugosidade_mm_range": [0.001, 0.002],
+      "coeficiente_hw_novo": 145,
+      "coeficiente_hw_usado": 135,
+      "norma_material": "ASTM D1785",
+      "uso_naval_tipico": "Água potável, esgoto"
+    },
+    {
+      "id": "grp_fibra_vidro",
+      "nome": "GRP (fibra de vidro)",
+      "rugosidade_mm": 0.025,
+      "rugosidade_mm_range": [0.015, 0.035],
+      "coeficiente_hw_novo": 145,
+      "coeficiente_hw_usado": 135,
+      "norma_material": "ISO 14692",
+      "uso_naval_tipico": "Lastro moderno"
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "versao_schema": "1.0",
+  "singularidades": [
+    {
+      "id": "curva_90_rl",
+      "nome": "Curva 90° raio longo (R/D = 1,5)",
+      "K": 0.6,
+      "Le_sobre_D": 16,
+      "referencia": "Crane TP-410",
+      "categoria": "curva",
+      "suporta_metodo_A": false
+    },
+    {
+      "id": "curva_90_rc",
+      "nome": "Curva 90° raio curto (R/D = 1,0)",
+      "K": 1.5,
+      "Le_sobre_D": 30,
+      "referencia": "Crane TP-410",
+      "categoria": "curva",
+      "suporta_metodo_A": false
+    },
+    {
+      "id": "curva_45_rl",
+      "nome": "Curva 45° raio longo",
+      "K": 0.4,
+      "Le_sobre_D": 10,
+      "referencia": "Crane TP-410",
+      "categoria": "curva",
+      "suporta_metodo_A": false
+    },
+    {
+      "id": "curva_45_rc",
+      "nome": "Curva 45° raio curto",
+      "K": 0.8,
+      "Le_sobre_D": 16,
+      "referencia": "Crane TP-410",
+      "categoria": "curva",
+      "suporta_metodo_A": false
+    },
+    {
+      "id": "curva_180",
+      "nome": "Curva 180° (retorno)",
+      "K": 2.2,
+      "Le_sobre_D": 50,
+      "referencia": "Crane TP-410",
+      "categoria": "curva",
+      "suporta_metodo_A": false
+    },
+    {
+      "id": "valvula_gaveta",
+      "nome": "Válvula de gaveta (gate) — aberta",
+      "K": 0.15,
+      "Le_sobre_D": 7,
+      "referencia": "ISA / Crane TP-410",
+      "categoria": "valvula",
+      "suporta_metodo_A": true
+    },
+    {
+      "id": "valvula_globo",
+      "nome": "Válvula globo (globe) — aberta",
+      "K": 8.0,
+      "Le_sobre_D": 350,
+      "referencia": "ISA / Crane TP-410",
+      "categoria": "valvula",
+      "suporta_metodo_A": true
+    },
+    {
+      "id": "valvula_borboleta",
+      "nome": "Válvula borboleta — aberta",
+      "K": 1.2,
+      "Le_sobre_D": 45,
+      "referencia": "ISA / Crane TP-410",
+      "categoria": "valvula",
+      "suporta_metodo_A": true
+    },
+    {
+      "id": "valvula_esfera",
+      "nome": "Válvula esfera — passagem total",
+      "K": 0.08,
+      "Le_sobre_D": 3,
+      "referencia": "ISA / Crane TP-410",
+      "categoria": "valvula",
+      "suporta_metodo_A": true
+    },
+    {
+      "id": "valvula_retencao",
+      "nome": "Válvula de retenção de disco (swing check)",
+      "K": 2.5,
+      "Le_sobre_D": 100,
+      "referencia": "ISA / Crane TP-410",
+      "categoria": "valvula",
+      "suporta_metodo_A": false
+    },
+    {
+      "id": "valvula_retencao_pistoes",
+      "nome": "Válvula de retenção de pistão (lift check)",
+      "K": 8.0,
+      "Le_sobre_D": 400,
+      "referencia": "ISA / Crane TP-410",
+      "categoria": "valvula",
+      "suporta_metodo_A": false
+    },
+    {
+      "id": "valvula_kingston",
+      "nome": "Válvula kingston (sea chest)",
+      "K": 1.0,
+      "Le_sobre_D": 0,
+      "referencia": "BV / Crane TP-410",
+      "categoria": "valvula",
+      "suporta_metodo_A": false
+    },
+    {
+      "id": "tee_passagem_direta",
+      "nome": "Tê — passagem direta",
+      "K": 0.45,
+      "Le_sobre_D": 20,
+      "referencia": "Crane TP-410",
+      "categoria": "tee",
+      "suporta_metodo_A": false
+    },
+    {
+      "id": "tee_saida_lateral",
+      "nome": "Tê — saída lateral 90°",
+      "K": 1.75,
+      "Le_sobre_D": 60,
+      "referencia": "Crane TP-410",
+      "categoria": "tee",
+      "suporta_metodo_A": false
+    },
+    {
+      "id": "entrada_borda_viva",
+      "nome": "Entrada borda viva",
+      "K": 0.5,
+      "Le_sobre_D": 0,
+      "referencia": "Crane TP-410",
+      "categoria": "transicao",
+      "suporta_metodo_A": false
+    },
+    {
+      "id": "entrada_arredondada",
+      "nome": "Entrada bem arredondada",
+      "K": 0.04,
+      "Le_sobre_D": 0,
+      "referencia": "Crane TP-410",
+      "categoria": "transicao",
+      "suporta_metodo_A": false
+    },
+    {
+      "id": "saida_reservatorio",
+      "nome": "Saída (em reservatório)",
+      "K": 1.0,
+      "Le_sobre_D": 0,
+      "referencia": "Crane TP-410",
+      "categoria": "transicao",
+      "suporta_metodo_A": false
+    }
+  ]
+}

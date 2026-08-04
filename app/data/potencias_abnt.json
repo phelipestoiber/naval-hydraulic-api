@@ -1,0 +1,19 @@
+{
+  "versao_schema": "2.0",
+  "potencias_cv": [
+    0.083, 0.125, 0.167, 0.25, 0.333, 0.5, 0.75, 1,
+    1.5, 2, 3, 4, 5, 6, 7.5, 10, 12.5, 15, 20, 25,
+    30, 40, 50, 60, 75, 100, 125, 150, 200
+  ],
+  "margens_por_tipo": {
+    "eletrico": [
+      {"cv_max": 2.0,  "margem_pct": 50},
+      {"cv_max": 5.0,  "margem_pct": 30},
+      {"cv_max": 10.0, "margem_pct": 20},
+      {"cv_max": 20.0, "margem_pct": 15},
+      {"cv_max": null, "margem_pct": 10}
+    ],
+    "diesel":   [{"cv_max": null, "margem_pct": 25}],
+    "gasolina": [{"cv_max": null, "margem_pct": 50}]
+  }
+}

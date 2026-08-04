@@ -1,0 +1,6 @@
+pyproject.toml
+naval_hydraulic_api.egg-info/PKG-INFO
+naval_hydraulic_api.egg-info/SOURCES.txt
+naval_hydraulic_api.egg-info/dependency_links.txt
+naval_hydraulic_api.egg-info/requires.txt
+naval_hydraulic_api.egg-info/top_level.txt
