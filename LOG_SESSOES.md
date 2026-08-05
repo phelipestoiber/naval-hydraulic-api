@@ -47,6 +47,35 @@ Copiar o template abaixo, preencher, colar no topo da seção "Entradas" (ordem 
 
 ## Entradas
 
+### 2026-08-04 — v0.5.0 — NPSH, Margem de Cavitação e Temperatura Crítica
+
+**Objetivo da sessão:** Implementar o cálculo da pressão de vapor $P_v(T)$ via Equação de Antoine, determinação do NPSH disponível ($\text{NPSHa}$), avaliação da margem de cavitação ($\text{NPSHa} - \text{NPSHr}$) e determinação da temperatura crítica de cavitação $T_{\text{crit}}$ por TDD estrito.
+
+**Feito:**
+- Criado [pressao_vapor.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/cavitacao/pressao_vapor.py) com a Equação de Antoine $\log_{10}(P_v) = A - \frac{B}{T + C}$ para água e outros fluidos
+- Criado [npsh.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/cavitacao/npsh.py) calculando $\text{NPSHa} = \frac{P_{\text{atm}} - P_v}{\rho \cdot g} + Z_{\text{suc}} - h_{f,\text{suc}}$
+- Criado [margem.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/cavitacao/margem.py) calculando a margem de cavitação e avaliando o status operacional (`OK` vs `ALERTA_CAVITACAO`) com margem mínima requerida conforme a norma API 610 / HI ($\Delta_{\text{req}} = \max(0.5\text{ m}, 0.10 \times \text{NPSHr})$)
+- Criado [temperatura_critica.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/cavitacao/temperatura_critica.py) determinando $T_{\text{crit}}$ via bisseção implícita onde $\text{NPSHa}(T_{\text{crit}}) = \text{NPSHr}$
+- Criado [test_pressao_vapor.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_pressao_vapor.py) validando $P_v$ a 20°C e 80°C ($T5.1$)
+- Criado [test_npsh.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_npsh.py) reproduzindo a sucção do Exemplo 2.13 de Silva Telles ($\text{NPSHa} = 11.50$ m $\pm 2\%$) ($T5.2$)
+- Criado [test_margem_cavitacao.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_margem_cavitacao.py) testando casos seguro e cavitando ($T5.3$)
+- Criado [test_temperatura_critica.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_temperatura_critica.py) obtendo $T_{\text{crit}} \approx 57.8^\circ\text{C}$ ($T5.4$)
+
+**Por quê:** Concluir o tratamento de cavitação e verificação de sucção da Fase 2 (Bombas e Ponto de Operação), garantindo a proteção da instalação contra danos por vaporização localizada do fluido.
+
+**Deu certo:**
+- 48/48 testes unitários passando com 99% de cobertura global
+- Exemplo 2.13 de Silva Telles reproduzido: $\text{NPSHa} \approx 11.50$ m para linha de sução a 20°C
+- Temperatura crítica de cavitação $T_{\text{crit}} \approx 57.8^\circ\text{C}$ ($\pm 5\%$) coincidente com a especificação $T5.4$
+- Avaliação da margem de cavitação identificando com exatidão instabilidades e disparando `ALERTA_CAVITACAO`
+
+**Deu errado / retrabalho:**
+- nada a registrar
+
+**Estado ao final:** 48/48 testes passando; 99% cobertura global; 0 bloqueios abertos
+
+---
+
 ### 2026-08-04 — v0.4.0 — Interpolação PCHIP, Ponto de Operação e Velocidade Específica
 
 **Objetivo da sessão:** Implementar a interpolação PCHIP de curvas de bombas sem overshoot, o cálculo do ponto de operação (Q_op, H_op) com verificação de contorno obrigatória F3 antes do loop, velocidade específica $N_s$ e avaliação da faixa operacional BEP por TDD estrito.
@@ -76,6 +105,8 @@ Copiar o template abaixo, preencher, colar no topo da seção "Entradas" (ordem 
 **Estado ao final:** 42/42 testes passando; 99% cobertura global; 0 bloqueios abertos
 
 ---
+
+### 2026-08-04 — v0.3.0 — Perdas Localizadas e Sistema Completo
 
 **Objetivo da sessão:** Implementar o cálculo de Hazen-Williams com travas de aplicabilidade e fallback automático para Darcy-Weisbach, perdas localizadas (coeficientes K e comprimento equivalente $L_e$), curva de resistência do sistema $H_{\text{sistema}}(Q)$ e equação de Bernoulli generalizada por TDD estrito.
 
