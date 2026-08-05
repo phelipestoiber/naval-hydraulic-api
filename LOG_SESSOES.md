@@ -47,6 +47,33 @@ Copiar o template abaixo, preencher, colar no topo da seção "Entradas" (ordem 
 
 ## Entradas
 
+### 2026-08-04 — v0.6.0 — Motor Elétrico, Rendimento Global e Consumo de Combustível
+
+**Objetivo da sessão:** Implementar o cálculo da potência hidráulica $P_{\text{hid}}$, potência no eixo da bomba $P_{\text{eixo}}$, potência elétrica $P_{\text{elet}}$, corrente nominal trifásica $I_{\text{nom}}$, rendimento global da cadeia de acionamento $\eta_{\text{global}}$ e consumo de combustível diesel por TDD estrito.
+
+**Feito:**
+- Criado [eletrico.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/motores/eletrico.py) calculando $P_{\text{hid}}$, $P_{\text{eixo}}$, $P_{\text{elet}}$ e a corrente nominal trifásica $I_{\text{nom}} = \frac{P_{\text{elet}} \cdot 1000}{\sqrt{3} \cdot V \cdot \text{FP}}$
+- Criado [rendimento_global.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/motores/rendimento_global.py) calculando o rendimento global da cadeia de acionamento ($\eta_{\text{global}} = \eta_{\text{bomba}} \cdot \eta_{\text{motor}} \cdot \eta_{\text{transmissao}}$)
+- Criado [consumo_diesel.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/motores/consumo_diesel.py) calculando o consumo horário de combustível diesel em g/h e em L/h ($\text{consumo\_lh} = \frac{P_{\text{eixo}} \cdot \text{SFC}}{\rho_{\text{diesel}}}$)
+- Criado [test_motor_eletrico.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_motor_eletrico.py) validando $P_{\text{hid}} \approx 2.73\text{ kW}$, $P_{\text{elet}} \approx 3.75\text{ kW}$ e $I_{\text{nom}} \approx 6.71\text{ A}$ ($T6.1$)
+- Criado [test_rendimento_global.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_rendimento_global.py) validando $\eta_{\text{global}} \approx 71.2\%$ ($T6.2$)
+- Criado [test_consumo_diesel.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_consumo_diesel.py) validando o consumo de combustível diesel $0.85\text{ L/h}$ ($\pm 2\%$) ($T6.3$)
+
+**Por quê:** Iniciar a Fase 3 (Motores, Consumos e Inversor de Frequência), permitindo o dimensionamento eletromecânico e a avaliação de custos energéticos e operacionais da planta naval.
+
+**Deu certo:**
+- 53/53 testes unitários passando com 99% de cobertura global
+- Potência hidráulica ($2.73\text{ kW}$) e corrente nominal trifásica ($6.71\text{ A}$) coincidindo exatamente com os valores de especificação ($T6.1$)
+- Rendimento global da cadeia acionadora obtido de $71.2\%$ ($T6.2$)
+- Consumo horário de óleo diesel naval resultando em $0.85\text{ L/h}$ ($T6.3$)
+
+**Deu errado / retrabalho:**
+- nada a registrar
+
+**Estado ao final:** 53/53 testes passando; 99% cobertura global; 0 bloqueios abertos
+
+---
+
 ### 2026-08-04 — v0.5.0 — NPSH, Margem de Cavitação e Temperatura Crítica
 
 **Objetivo da sessão:** Implementar o cálculo da pressão de vapor $P_v(T)$ via Equação de Antoine, determinação do NPSH disponível ($\text{NPSHa}$), avaliação da margem de cavitação ($\text{NPSHa} - \text{NPSHr}$) e determinação da temperatura crítica de cavitação $T_{\text{crit}}$ por TDD estrito.

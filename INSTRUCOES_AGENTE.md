@@ -8,16 +8,16 @@
 ## Estado Atual do Projeto
 
 ```
-Versão implementada:  v0.5.0
-Próxima versão:       v0.6.0
-Fase atual:           2 — Bombas e Ponto de Operação
+Versão implementada:  v0.6.0
+Próxima versão:       v0.7.0
+Fase atual:           3 — Motores, Consumos e Inversor de Frequência
 
-Testes passando:      48 / 48
-Testes pendentes:     6.1 → 6.4 (v0.6.0)
+Testes passando:      53 / 53
+Testes pendentes:     7.1 → 7.4 (v0.7.0)
 Cobertura global:     99%
 
 Bloqueios conhecidos: nenhum
-Última sessão:        2026-08-04 — v0.5.0 — NPSH, Margem de Cavitação e Temperatura Crítica
+Última sessão:        2026-08-04 — v0.6.0 — Motor Elétrico, Rendimento Global e Consumo de Combustível
 ```
 
 **Instrução de atualização:** ao encerrar cada sessão, reescrever o bloco acima com o estado real. Nunca iniciar uma sessão sem ler este bloco primeiro.
