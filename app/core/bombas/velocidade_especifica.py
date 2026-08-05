@@ -1,3 +1,5 @@
+import math
+
 def calcular_velocidade_especifica(N_rpm: float, Q_m3s: float, Hb_m: float) -> float:
     """
     Calcula a velocidade específica Ns (em unidades SI):

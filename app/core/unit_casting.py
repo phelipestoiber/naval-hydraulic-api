@@ -22,9 +22,14 @@ def realizar_unit_casting(payload: dict[str, Any]) -> tuple[SistemaSI, Rastreabi
     """
     Executa a conversão de unidades de engenharia para o Sistema Internacional (SI),
     aplica sanity checks e verifica limitações topológicas.
+    Sporta payloads planos e estruturados em seções ('sistema', 'fluido', 'trechos', 'bomba').
     """
+    sistema_dict = payload.get("sistema", {}) if isinstance(payload.get("sistema"), dict) else {}
+    fluido_dict = payload.get("fluido", {}) if isinstance(payload.get("fluido"), dict) else {}
+    trechos_list = payload.get("trechos", []) if isinstance(payload.get("trechos"), list) else []
+
     # 1. Sanity Check — Unidade de Vazão
-    unidade_vazao = payload.get("unidade_vazao", "m3h")
+    unidade_vazao = payload.get("unidade_vazao", sistema_dict.get("unidade_vazao", "m3h"))
     unidades_vazao_validas = ("m3h", "m3/h", "l/min", "l/s", "m3s")
     if unidade_vazao not in unidades_vazao_validas:
         raise ErroCalculo(
@@ -34,7 +39,7 @@ def realizar_unit_casting(payload: dict[str, Any]) -> tuple[SistemaSI, Rastreabi
         )
 
     # 2. Sanity Check — Vazão
-    vazao_bruta = payload.get("vazao", 0.0)
+    vazao_bruta = payload.get("vazao", sistema_dict.get("vazao", 0.0))
     if vazao_bruta <= 0:
         raise ErroCalculo(
             codigo="VAZAO_NEGATIVA",
@@ -57,7 +62,11 @@ def realizar_unit_casting(payload: dict[str, Any]) -> tuple[SistemaSI, Rastreabi
         Q_m3s = vazao_bruta
 
     # 3. Sanity Check — Diâmetro
-    diametro_mm = payload.get("diametro_mm", payload.get("diametro_s_mm", 150.0))
+    diametro_default = 150.0
+    if trechos_list and isinstance(trechos_list[0], dict):
+        diametro_default = trechos_list[0].get("diametro_interno_mm", 150.0)
+
+    diametro_mm = payload.get("diametro_mm", payload.get("diametro_s_mm", sistema_dict.get("diametro_mm", diametro_default)))
     if diametro_mm <= 0:
         raise ErroCalculo(
             codigo="DIAMETRO_INVALIDO",
@@ -67,7 +76,7 @@ def realizar_unit_casting(payload: dict[str, Any]) -> tuple[SistemaSI, Rastreabi
     D_m = diametro_mm / 1000.0
 
     # 4. Sanity Check — Densidade
-    rho = payload.get("densidade_kg_m3", 1000.0)
+    rho = payload.get("densidade_kg_m3", fluido_dict.get("densidade_kg_m3", 1000.0))
     if rho <= 0 or rho > 2000.0:
         raise ErroCalculo(
             codigo="DENSIDADE_INVALIDA",
@@ -76,7 +85,7 @@ def realizar_unit_casting(payload: dict[str, Any]) -> tuple[SistemaSI, Rastreabi
         )
 
     # 5. Sanity Check — Viscosidade dinâmica
-    mu = payload.get("viscosidade_dinamica_Pa_s", 0.001)
+    mu = payload.get("viscosidade_dinamica_Pa_s", fluido_dict.get("viscosidade_dinamica_Pa_s", 0.001))
     if mu <= 0:
         raise ErroCalculo(
             codigo="VISCOSIDADE_INVALIDA",
@@ -86,7 +95,7 @@ def realizar_unit_casting(payload: dict[str, Any]) -> tuple[SistemaSI, Rastreabi
     nu_m2s = mu / rho
 
     # 6. Sanity Check — Pressão de vapor
-    pressao_vapor = payload.get("pressao_vapor_Pa", 0.0)
+    pressao_vapor = payload.get("pressao_vapor_Pa", fluido_dict.get("pressao_vapor_Pa", 0.0))
     if pressao_vapor < 0:
         raise ErroCalculo(
             codigo="PRESSAO_VAPOR_INVALIDA",
@@ -95,7 +104,7 @@ def realizar_unit_casting(payload: dict[str, Any]) -> tuple[SistemaSI, Rastreabi
         )
 
     # 7. Sanity Check — Temperatura
-    temp_c = payload.get("temperatura_C", 20.0)
+    temp_c = payload.get("temperatura_C", fluido_dict.get("temperatura_C", 20.0))
     T_k = temp_c + 273.15
     if T_k < 273.15 or T_k > 700.0:
         raise ErroCalculo(
@@ -115,8 +124,7 @@ def realizar_unit_casting(payload: dict[str, Any]) -> tuple[SistemaSI, Rastreabi
     epsilon_m = rugosidade_mm / 1000.0
 
     # 9. Topologia Check (Malha Fechada — F1)
-    trechos = payload.get("trechos", [])
-    if trechos and detectar_malha_fechada(trechos):
+    if trechos_list and detectar_malha_fechada(trechos_list):
         raise ErroCalculo(
             codigo="TOPOLOGIA_MALHA_NAO_SUPORTADA",
             mensagem=(
@@ -127,9 +135,9 @@ def realizar_unit_casting(payload: dict[str, Any]) -> tuple[SistemaSI, Rastreabi
         )
 
     comprimento_m = payload.get("comprimento_m", 10.0)
-    pressao_atm_Pa = payload.get("pressao_atm_Pa", 101325.0)
-    altitude_m = payload.get("altitude_m", 0.0)
-    rotacao_rpm = payload.get("rotacao_rpm", 1450.0)
+    pressao_atm_Pa = payload.get("pressao_atm_Pa", sistema_dict.get("pressao_atm_Pa", 101325.0))
+    altitude_m = payload.get("altitude_m", sistema_dict.get("altitude_m", 0.0))
+    rotacao_rpm = payload.get("rotacao_rpm", payload.get("bomba", {}).get("rotacao_rpm", 1450.0))
 
     sistema_si = SistemaSI(
         Q_m3s=Q_m3s,

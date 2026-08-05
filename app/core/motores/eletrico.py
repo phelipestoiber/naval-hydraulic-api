@@ -1,4 +1,9 @@
 import math
+from typing import Any
+
+MOTORES_ABNT_CV = [
+    0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 6.0, 7.5, 10.0, 12.5, 15.0, 20.0, 25.0, 30.0, 40.0, 50.0, 60.0, 75.0, 100.0
+]
 
 def calcular_potencia_hidraulica(
     Q_m3s: float,
@@ -48,3 +53,21 @@ def calcular_corrente_nominal_trifasica(
     if denom <= 0:
         return 0.0
     return (p_elet_kw * 1000.0) / denom
+
+def selecionar_motor_normalizado(p_eixo_kw: float) -> dict[str, Any]:
+    """
+    Seleciona a carcaça/potência nominal normalizada comercial em CV superior a P_eixo.
+    """
+    p_eixo_cv = p_eixo_kw / 0.735499
+    pot_cv_sel = MOTORES_ABNT_CV[-1]
+    for cv in MOTORES_ABNT_CV:
+        if cv >= p_eixo_cv:
+            pot_cv_sel = cv
+            break
+
+    return {
+        "potencia_eixo_kw": p_eixo_kw,
+        "potencia_eixo_cv": p_eixo_cv,
+        "potencia_cv": pot_cv_sel,
+        "potencia_kw": pot_cv_sel * 0.735499
+    }

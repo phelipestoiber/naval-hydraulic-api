@@ -1,5 +1,14 @@
 from typing import Any
 
+TABELA_SINGULARIDADES_DEFAULT: dict[str, dict[str, float]] = {
+    "valvula_gaveta": {"K": 0.15, "Le_sobre_D": 8.0},
+    "curva_90_rl": {"K": 0.25, "Le_sobre_D": 20.0},
+    "valvula_retencao": {"K": 2.0, "Le_sobre_D": 50.0},
+    "tee_passagem_direta": {"K": 0.35, "Le_sobre_D": 20.0},
+    "curva_90": {"K": 0.30, "Le_sobre_D": 30.0},
+    "entrada_tubulacao": {"K": 0.50, "Le_sobre_D": 15.0}
+}
+
 def calcular_perda_localizada_k(K: float, v_ms: float, g: float = 9.81) -> float:
     """
     Calcula a perda de carga localizada hL pelo Método dos Coeficientes K:
@@ -33,8 +42,15 @@ def calcular_perda_singularidades(
 
     for item in singularidades:
         qtd = item.get("quantidade", 1)
+        tipo = str(item.get("tipo", "")).lower()
+
         K_unit = item.get("K", 0.0)
         le_sd_unit = item.get("Le_sobre_D", 0.0)
+
+        if K_unit == 0.0 and le_sd_unit == 0.0 and tipo in TABELA_SINGULARIDADES_DEFAULT:
+            info_def = TABELA_SINGULARIDADES_DEFAULT[tipo]
+            K_unit = info_def["K"]
+            le_sd_unit = info_def["Le_sobre_D"]
 
         if le_sd_unit > 0:
             le_item = qtd * le_sd_unit * D_m

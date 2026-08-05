@@ -12,7 +12,7 @@ Toda entrada com impacto além da própria sessão recebe uma tag `LICAO-NNN`. U
 
 | Tag | Resumo em uma linha | Sessão |
 |---|---|---|
-| — | (nenhuma lição registrada ainda) | — |
+| LICAO-001 | Assinatura de `calcular_reynolds(Q_m3s, D_m, nu)` espera `Q_m3s` e não velocidade `v` | 2026-08-05 (v0.9.0) |
 
 ---
 
@@ -46,6 +46,38 @@ Copiar o template abaixo, preencher, colar no topo da seção "Entradas" (ordem 
 ---
 
 ## Entradas
+
+### 2026-08-05 — v0.9.0 — Pipeline de Cálculo Integrado, Banco de Dados e Testes de Integração
+
+**Objetivo da sessão:** Implementar o motor de pipeline integrado `app/core/pipeline.py`, a persistência em memória UUID v4 em `app/db/crud.py`, o módulo naval de varredura 3D `app/core/naval/inclinacao.py`, verificação de normas `app/core/naval/normas.py`, redundância `app/core/naval/redundancia.py`, fixture `payload_referencia` em `conftest.py` e validação estrita de todos os Golden Values por TDD.
+
+**Feito:**
+- Criado [conftest.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/conftest.py) com a fixture `payload_referencia` completa para resfriamento de motor principal
+- Criados [database.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/db/database.py) e [crud.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/db/crud.py) com suporte a CRUD em dicionário em memória e geração de UUID v4 (`create_calculo`, `get_calculo`)
+- Criado [test_db.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_db.py) validando persistência e busca por UUID ($T9.4$)
+- Criados os módulos navais em `app/core/naval/`: [inclinacao.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/naval/inclinacao.py) (varredura 3D das 9 condições), [normas.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/naval/normas.py) (limites de velocidade de sucção/descarga) e [redundancia.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/naval/redundancia.py) (avaliação de bombas essenciais)
+- Criado [pipeline.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/pipeline.py) integrando as Camadas 1 a 6 em `executar_pipeline_calculo(payload)`
+- Criado [test_pipeline_completo.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/integration/test_pipeline_completo.py) cobrindo $T9.1$ (Golden Values), $T9.2$ (Reprovação por inclinação em avaria), $T9.3$ (Vazão em galões/min), $T9.5$ (Erro Shut-Off), $T9.6$ (Erro Malha Fechada), $T9.7$ (Corte por viscosidade), $T9.8$ (Persistência)
+
+**Por quê:** Conectar todos os sub-sistemas isolados (Fases 1, 2 e 3) em uma única função de cálculo de ponta a ponta que garanta a reprodução exata de todos os Golden Values especificados nas normas navais.
+
+**Deu certo:**
+- 78/78 testes (unitários + integração) passando com 98% de cobertura global
+- Reprodução exata de todos os Golden Values do sistema de referência:
+  - Reynolds sucção em prumo = 287.000 (±2%)
+  - Velocidade sucção = 1.87 m/s; Descarga = 2.69 m/s
+  - H_geo = 3.40 m; Altura manométrica = 8.45 m (±5%)
+  - NPSHd prumo = 4.82 m (±5%)
+  - Ns velocidade específica = 63.7 (centrifuga_mista)
+  - Motor selecionado = 7.5 CV
+- Persistência com UUID v4 em banco em memória gerando identificadores válidos ($T9.4$) e permitindo recuperação integral do resultado por ID ($T9.8$)
+
+**Deu errado / retrabalho:**
+- A função `calcular_reynolds` em `reynolds.py` exige a vazão em m³/s (`Q_m3s`) e o diâmetro (`D_m`), não a velocidade. Passar a velocidade causa divergência do Reynolds por um fator de $A_{\text{tubo}}$. `[LICAO-001]`
+
+**Estado ao final:** 78/78 testes passando; 98% cobertura global; 0 bloqueios abertos
+
+---
 
 ### 2026-08-04 — v0.8.0 — Schemas Pydantic, Serialização e Endpoints REST
 
@@ -276,4 +308,3 @@ Copiar o template abaixo, preencher, colar no topo da seção "Entradas" (ordem 
 - Ajustado o teste [test_viscosidade.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_viscosidade.py) para utilizar as constantes do modelo de Andrade ($\text{Pa}\cdot\text{s}$) e Walther ($\text{cSt}$) coerentes com as formulações exponenciais
 
 **Estado ao final:** 16/16 testes passando; 100% cobertura global; 0 bloqueios abertos
-

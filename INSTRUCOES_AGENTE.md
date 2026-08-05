@@ -1,6 +1,6 @@
 # INSTRUÇÕES DO AGENTE — Naval Hydraulic Calculator API
 
-**Versão:** 2.2  
+**Versão:** 2.3  
 **Atualizar esta seção de estado ao iniciar cada sessão.**
 
 ---
@@ -8,16 +8,16 @@
 ## Estado Atual do Projeto
 
 ```
-Versão implementada:  v0.8.0
-Próxima versão:       v0.9.0
-Fase atual:           4 — APIs REST FastAPI e Schemas Pydantic
+Versão implementada:  v0.9.0
+Próxima versão:       v1.0.0
+Fase atual:           4 — API REST Completa, Persistência e Documentação Final
 
-Testes passando:      71 / 71
-Testes pendentes:     9.1 → 9.4 (v0.9.0)
-Cobertura global:     99%
+Testes passando:      78 / 78
+Testes pendentes:     10.1 → 10.5 (v1.0.0)
+Cobertura global:     98%
 
 Bloqueios conhecidos: nenhum
-Última sessão:        2026-08-04 — v0.8.0 — Schemas Pydantic, Serialização e Endpoints REST
+Última sessão:        2026-08-05 — v0.9.0 — Pipeline de Cálculo Integrado, Banco de Dados e Testes de Integração
 ```
 
 **Instrução de atualização:** ao encerrar cada sessão, reescrever o bloco acima com o estado real. Nunca iniciar uma sessão sem ler este bloco primeiro.
@@ -233,10 +233,10 @@ FASE 3 — Naval
   v0.7.0  Geometria 3D, matrizes R(θ,φ), varredura 9 condições,
            status OK/AVISO/REPROVADO, condicoes_reprovadas
   v0.8.0  Normas BV/LR/ABS, MAWP, velocidades, redundância (4 cenários)
-  v0.9.0  Pipeline completo, banco de dados, ErrorResponse, conftest,
-           testes de integração
 
 FASE 4 — API REST
+  v0.9.0  Pipeline completo, banco de dados, ErrorResponse, conftest,
+           testes de integração
   v1.0.0  Todos os endpoints, persistência ativa, middleware de erro, README
   v1.1.0  Upload CSV, POST /comparar, modelos de viscosidade no payload
 ```
