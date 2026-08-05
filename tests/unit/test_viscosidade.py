@@ -2,7 +2,8 @@ import pytest
 from app.core.fluidos.viscosidade import (
     calcular_viscosidade_andrade,
     calcular_viscosidade_walther,
-    calcular_viscosidade_linear
+    calcular_viscosidade_linear,
+    calcular_viscosidade
 )
 
 def test_andrade_agua_doce():
@@ -48,3 +49,13 @@ def test_distincao_alpha_viscos_vs_alpha_cinetico():
     mu_calc = calcular_viscosidade_linear(T_k, mu_ref, T_ref_k, alpha_viscos)
     # mu_calc = 0.001 * [1 + (-0.02)*20] = 0.001 * 0.6 = 0.0006 Pa.s
     assert mu_calc == pytest.approx(0.0006, rel=1e-4)
+
+def test_calcular_viscosidade_lube_e_temperatura_extrema():
+    """Testa função genérica para óleo lubrificante e trava de densidade."""
+    res_lube = calcular_viscosidade("oleo_lubrificante", 293.15)
+    assert res_lube["massa_especifica_kgm3"] == 890.0
+    assert res_lube["viscosidade_dinamica_pas"] > 0
+
+    # Temperatura extrema T_k = 600 K (temp_c = 326.85°C -> rho <= 0 -> fallback 1000.0)
+    res_ext = calcular_viscosidade("agua_doce", 600.0)
+    assert res_ext["massa_especifica_kgm3"] == 1000.0
