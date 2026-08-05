@@ -1,6 +1,6 @@
 # INSTRUÇÕES DO AGENTE — Naval Hydraulic Calculator API
 
-**Versão:** 2.3  
+**Versão:** 3.0  
 **Atualizar esta seção de estado ao iniciar cada sessão.**
 
 ---
@@ -8,16 +8,16 @@
 ## Estado Atual do Projeto
 
 ```
-Versão implementada:  v0.9.0
-Próxima versão:       v1.0.0
-Fase atual:           4 — API REST Completa, Persistência e Documentação Final
+Versão implementada:  v1.0.0
+Próxima versão:       v1.1.0
+Fase atual:           Fase 4 Concluída / Funcionalidades Avançadas (v1.1.0)
 
-Testes passando:      78 / 78
-Testes pendentes:     10.1 → 10.5 (v1.0.0)
+Testes passando:      85 / 85
+Testes pendentes:     11.1 → 11.4 (v1.1.0)
 Cobertura global:     98%
 
 Bloqueios conhecidos: nenhum
-Última sessão:        2026-08-05 — v0.9.0 — Pipeline de Cálculo Integrado, Banco de Dados e Testes de Integração
+Última sessão:        2026-08-05 — v1.0.0 — API REST Pública, Persistência, Endpoints e Documentação Final
 ```
 
 **Instrução de atualização:** ao encerrar cada sessão, reescrever o bloco acima com o estado real. Nunca iniciar uma sessão sem ler este bloco primeiro.
@@ -109,81 +109,6 @@ Estes valores devem ser reproduzidos pelo pipeline com as tolerâncias indicadas
 | Velocidade específica Ns | Ponto de operação | ≈ 63,7 | ±5% |
 | Tipo de bomba | Ponto de operação | centrifuga_mista | exato |
 | Motor selecionado | Caso de referência | 7,5 CV | exato |
-
-**Payload de referência completo para todos os golden values (REFERENCIAL Seção 10.4):**
-```json
-{
-  "projeto": {
-    "nome": "Sistema de Resfriamento — ME Principal",
-    "navio": "MV Example",
-    "classificadora": "BV",
-    "norma": "NR467",
-    "revisao": "0"
-  },
-  "fluido": {
-    "tipo": "agua_salgada",
-    "nome": "Água do mar",
-    "temperatura_C": 32,
-    "densidade_kg_m3": 1025,
-    "viscosidade_dinamica_Pa_s": 0.001,
-    "pressao_vapor_Pa": 4800,
-    "modelo_viscosidade": "andrade"
-  },
-  "sistema": {
-    "unidade_vazao": "m3h",
-    "vazao": 118.5,
-    "pressao_succao_Pa": 101325,
-    "pressao_descarga_Pa": 101325,
-    "pressao_atm_Pa": 101325,
-    "altitude_m": 0,
-    "pontos_sistema": {
-      "succao":   {"x_m": -12.5, "y_m": 1.2, "z_m": 0.8},
-      "bomba":    {"x_m": -11.0, "y_m": 1.2, "z_m": 1.5},
-      "descarga": {"x_m":   5.0, "y_m": 1.2, "z_m": 4.2}
-    },
-    "condicoes_inclinacao": "BV_operacao_e_avaria",
-    "sistema_essencial": true,
-    "numero_bombas": 2,
-    "alimentacoes_independentes": true
-  },
-  "trechos": [
-    {
-      "id": "S1", "descricao": "Sucção — kingston a bomba",
-      "diametro_interno_mm": 150, "comprimento_m": 8.5,
-      "material": "aco_inox_304", "rugosidade_mm": 0.02,
-      "metodo_perda": "darcy_weisbach",
-      "singularidades": [
-        {"tipo": "valvula_gaveta",   "quantidade": 1},
-        {"tipo": "curva_90_rl",      "quantidade": 2},
-        {"tipo": "valvula_retencao", "quantidade": 1}
-      ]
-    },
-    {
-      "id": "D1", "descricao": "Descarga — bomba ao resfriador",
-      "diametro_interno_mm": 125, "comprimento_m": 15.2,
-      "material": "aco_inox_304", "rugosidade_mm": 0.02,
-      "metodo_perda": "darcy_weisbach",
-      "singularidades": [
-        {"tipo": "curva_90_rl",         "quantidade": 3},
-        {"tipo": "tee_passagem_direta", "quantidade": 1}
-      ]
-    }
-  ],
-  "bomba": {
-    "fabricante": "Grundfos", "modelo": "NK 100-315",
-    "rotacao_rpm": 1450, "metodo_margem_npsh": "combinado",
-    "curva_hq":   [{"Q_m3h": 0,"H_m": 42},{"Q_m3h": 50,"H_m": 40},
-                   {"Q_m3h": 100,"H_m": 36},{"Q_m3h": 150,"H_m": 28},
-                   {"Q_m3h": 180,"H_m": 18}],
-    "curva_npsh": [{"Q_m3h": 0,"NPSH_m": 1.5},{"Q_m3h": 100,"NPSH_m": 3.2},
-                   {"Q_m3h": 180,"NPSH_m": 6.5}],
-    "curva_eta":  [{"Q_m3h": 0,"eta_pct": 0},{"Q_m3h": 100,"eta_pct": 79},
-                   {"Q_m3h": 150,"eta_pct": 75},{"Q_m3h": 180,"eta_pct": 60}]
-  }
-}
-```
-
-> Campos `projeto`, `pressao_succao_Pa`, `pressao_descarga_Pa`, `sistema_essencial`, `numero_bombas` e `alimentacoes_independentes` são obrigatórios no schema completo mesmo quando não afetam diretamente um golden value específico — omiti-los quebra a validação Pydantic do payload real.
 
 ---
 

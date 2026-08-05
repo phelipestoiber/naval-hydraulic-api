@@ -10,6 +10,7 @@ def create_calculo(payload: dict[str, Any], resultado: dict[str, Any]) -> str:
     id_calculo = str(uuid.uuid4())
     registro = {
         "id": id_calculo,
+        "id_calculo": id_calculo,
         "criado_em": datetime.now(timezone.utc).isoformat(),
         "payload": payload,
         "resultado": resultado
