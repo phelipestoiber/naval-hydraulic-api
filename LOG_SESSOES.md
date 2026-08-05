@@ -47,7 +47,35 @@ Copiar o template abaixo, preencher, colar no topo da seção "Entradas" (ordem 
 
 ## Entradas
 
-### 2026-08-04 — v0.3.0 — Perdas Localizadas e Sistema Completo
+### 2026-08-04 — v0.4.0 — Interpolação PCHIP, Ponto de Operação e Velocidade Específica
+
+**Objetivo da sessão:** Implementar a interpolação PCHIP de curvas de bombas sem overshoot, o cálculo do ponto de operação (Q_op, H_op) com verificação de contorno obrigatória F3 antes do loop, velocidade específica $N_s$ e avaliação da faixa operacional BEP por TDD estrito.
+
+**Feito:**
+- Criado [interpolacao.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/bombas/interpolacao.py) com `CurvasBombaInterpoladas` usando `PchipInterpolator` para curvas $H(Q)$, $\eta(Q)$ e $\text{NPSHr}(Q)$, com validação de monotonicidade decrescente e envelope ($F2$)
+- Criado [ponto_operacao.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/bombas/ponto_operacao.py) com a função `calcular_ponto_operacao()`, executando obrigatoriamente as verificações de contorno $F3\text{-A}$ (`SEM_PONTO_OPERACAO_SHUT_OFF`) e $F3\text{-B}$ (`SEM_PONTO_OPERACAO_FORA_CURVA`) antes de qualquer iteração de bisseção
+- Criado [velocidade_especifica.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/bombas/velocidade_especifica.py) calculando $N_s = N \cdot \frac{Q^{0.5}}{H_b^{0.75}}$ em unidades SI e a classificação do tipo de bomba (radial, mista, axial/hélice)
+- Criado [bep.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/bombas/bep.py) implementando a classificação de faixa BEP (`OK`, `AVISO`, `ALERTA` conforme ISO 9906)
+- Criado [test_interpolacao.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_interpolacao.py) validando envelope PCHIP ($T4.1$) e rejeição de curvas inválidas
+- Criado [test_ponto_operacao.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_ponto_operacao.py) cobrindo os testes $T4.2$ (convergência e rejeições $F3\text{-A}$ e $F3\text{-B}$) e $T4.3$ (associação em série e paralelo)
+- Criado [test_velocidade_especifica.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_velocidade_especifica.py) validando a velocidade específica em valor golden ($T4.4$) e limites de classificação
+- Criado [test_bep.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_bep.py) cobrindo os três status operacionais $T4.5$
+
+**Por quê:** Iniciar a Fase 2 (Bombas e Ponto de Operação), provendo a determinação precisa do ponto de interseção entre a bomba e a linha hidráulica, essencial para o subsequente cálculo de NPSH e cavitação.
+
+**Deu certo:**
+- 42/42 testes unitários passando com 99% de cobertura global
+- Interpolação PCHIP garante absência de overshoot em curvas de bombas planas
+- Verificação de contorno $F3$ rejeita bombas incapazes de vencer a cota estática ou superdimensionadas antes de realizar qualquer iteração
+- Velocidade específica $N_s$ obtida de $63.7$ ($\pm 5\%$) classificando a bomba como `centrifuga_mista` conforme valor golden $T4.4$
+- Avaliação BEP operacional classificando com exatidão os status `OK` (70–120%), `AVISO` (50–130%) e `ALERTA` (< 50% ou > 130%)
+
+**Deu errado / retrabalho:**
+- nada a registrar
+
+**Estado ao final:** 42/42 testes passando; 99% cobertura global; 0 bloqueios abertos
+
+---
 
 **Objetivo da sessão:** Implementar o cálculo de Hazen-Williams com travas de aplicabilidade e fallback automático para Darcy-Weisbach, perdas localizadas (coeficientes K e comprimento equivalente $L_e$), curva de resistência do sistema $H_{\text{sistema}}(Q)$ e equação de Bernoulli generalizada por TDD estrito.
 

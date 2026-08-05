@@ -8,16 +8,16 @@
 ## Estado Atual do Projeto
 
 ```
-Versão implementada:  v0.3.0
-Próxima versão:       v0.4.0
+Versão implementada:  v0.4.0
+Próxima versão:       v0.5.0
 Fase atual:           2 — Bombas e Ponto de Operação
 
-Testes passando:      32 / 32
-Testes pendentes:     4.1 → 4.5 (v0.4.0)
+Testes passando:      42 / 42
+Testes pendentes:     5.1 → 5.4 (v0.5.0)
 Cobertura global:     99%
 
 Bloqueios conhecidos: nenhum
-Última sessão:        2026-08-04 — v0.3.0 — Perdas Localizadas e Sistema Completo
+Última sessão:        2026-08-04 — v0.4.0 — Interpolação PCHIP, Ponto de Operação e Velocidade Específica
 ```
 
 **Instrução de atualização:** ao encerrar cada sessão, reescrever o bloco acima com o estado real. Nunca iniciar uma sessão sem ler este bloco primeiro.
