@@ -47,6 +47,36 @@ Copiar o template abaixo, preencher, colar no topo da seção "Entradas" (ordem 
 
 ## Entradas
 
+### 2026-08-04 — v0.3.0 — Perdas Localizadas e Sistema Completo
+
+**Objetivo da sessão:** Implementar o cálculo de Hazen-Williams com travas de aplicabilidade e fallback automático para Darcy-Weisbach, perdas localizadas (coeficientes K e comprimento equivalente $L_e$), curva de resistência do sistema $H_{\text{sistema}}(Q)$ e equação de Bernoulli generalizada por TDD estrito.
+
+**Feito:**
+- Criado [hazen_williams.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/perda_carga/hazen_williams.py) com validação de 4 critérios de norma (`validar_hw()`) e fallback automático para Darcy-Weisbach
+- Criado [singularidades.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/perda_carga/singularidades.py) com suporte aos métodos dos coeficientes $K$ e comprimento equivalente $L_e$
+- Criado [sistema.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/perda_carga/sistema.py) para o cálculo do coeficiente de resistência $R$ e curva de carga do sistema $H_{\text{sistema}}(Q) = H_{\text{geo}} + R \cdot Q^2$
+- Criado [bernoulli.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/bernoulli.py) com a Equação de Bernoulli Generalizada e termo cinético com `alpha_cinetico`
+- Criado [test_hazen_williams.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_hazen_williams.py) com validação de 4 cenários de rejeição/aceitação e teste $T3.5$ (diferença $< 10\%$ vs Darcy-Weisbach)
+- Criado [test_singularidades.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_singularidades.py) reproduzindo o Exemplo 2.12 de Silva Telles ($L_e = 41.50$ m, $L' = 215.5$ m)
+- Criado [test_bernoulli.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_bernoulli.py) validando o balanço energético sem bomba ($T3.4$) e os termos cinéticos laminar/turbulento ($T3.3$)
+- Criado [test_sistema.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_sistema.py) cobrindo $R$ e $H_{\text{sistema}}$
+
+**Por quê:** Concluir a Fase 1 (Núcleo Hidráulico), garantindo a determinação completa da perda de carga do sistema em regime permanente antes de iniciar a Fase 2 (Bombas e Ponto de Operação).
+
+**Deu certo:**
+- 32/32 testes unitários passando com 99% de cobertura global
+- Exemplo 2.12 de Silva Telles reproduzido: soma dos comprimentos equivalentes $L_e = 41.50$ m e comprimento total $L' = 215.5$ m (tolerância $< 5\%$)
+- Exemplo 2.12 de Silva Telles reproduzido: balanço energético entre os pontos 1 e 2 sem bomba resultando em diferença de $4.03$ m ($\pm 2\%$ em relação a 3.95 m do livro)
+- Hazen-Williams vs Darcy-Weisbach para água doce a 20°C concordando com diferença $< 10\%$ ($T3.5$)
+- Travas de segurança de Hazen-Williams disparando fallbacks automáticos para Darcy-Weisbach em óleos, altas temperaturas, escoamento laminar ou diâmetros fora do intervalo $[12, 3600]$ mm
+
+**Deu errado / retrabalho:**
+- nada a registrar
+
+**Estado ao final:** 32/32 testes passando; 99% cobertura global; 0 bloqueios abertos
+
+---
+
 ### 2026-08-04 — v0.2.0 — Fator de Atrito e Perdas Distribuídas
 
 **Objetivo da sessão:** Implementar o cálculo do fator de atrito $f$ (Churchill, Colebrook-White, Swamee-Jain, Haaland, Poiseuille) e a equação de perda de carga distribuída de Darcy-Weisbach por TDD estrito.
@@ -70,6 +100,9 @@ Copiar o template abaixo, preencher, colar no topo da seção "Entradas" (ordem 
 
 **Estado ao final:** 24/24 testes passando; 99% cobertura global; 0 bloqueios abertos
 
+---
+
+### 2026-08-04 — v0.1.0 — Fundação Matemática e Propriedades de Fluidos
 
 **Objetivo da sessão:** Implementar a fundação matemática, schemas estáticos JSON, utilitários (math_utils, csv_utils), casting SI com sanity checks e detecção de malhas fechadas, e módulo de viscosidade/Reynolds por TDD.
 

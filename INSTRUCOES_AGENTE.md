@@ -8,16 +8,16 @@
 ## Estado Atual do Projeto
 
 ```
-Versão implementada:  v0.2.0
-Próxima versão:       v0.3.0
-Fase atual:           1 — Núcleo Hidráulico
+Versão implementada:  v0.3.0
+Próxima versão:       v0.4.0
+Fase atual:           2 — Bombas e Ponto de Operação
 
-Testes passando:      24 / 24
-Testes pendentes:     3.1 → 3.5 (v0.3.0)
+Testes passando:      32 / 32
+Testes pendentes:     4.1 → 4.5 (v0.4.0)
 Cobertura global:     99%
 
 Bloqueios conhecidos: nenhum
-Última sessão:        2026-08-04 — v0.2.0 — Fator de Atrito e Perdas Distribuídas
+Última sessão:        2026-08-04 — v0.3.0 — Perdas Localizadas e Sistema Completo
 ```
 
 **Instrução de atualização:** ao encerrar cada sessão, reescrever o bloco acima com o estado real. Nunca iniciar uma sessão sem ler este bloco primeiro.
