@@ -8,16 +8,16 @@
 ## Estado Atual do Projeto
 
 ```
-Versão implementada:  v0.6.0
-Próxima versão:       v0.7.0
-Fase atual:           3 — Motores, Consumos e Inversor de Frequência
+Versão implementada:  v0.7.0
+Próxima versão:       v0.8.0
+Fase atual:           4 — APIs REST FastAPI e Schemas Pydantic
 
-Testes passando:      53 / 53
-Testes pendentes:     7.1 → 7.4 (v0.7.0)
+Testes passando:      59 / 59
+Testes pendentes:     8.1 → 8.4 (v0.8.0)
 Cobertura global:     99%
 
 Bloqueios conhecidos: nenhum
-Última sessão:        2026-08-04 — v0.6.0 — Motor Elétrico, Rendimento Global e Consumo de Combustível
+Última sessão:        2026-08-04 — v0.7.0 — Leis de Semelhança (VFD) e Diâmetro de Impulsor
 ```
 
 **Instrução de atualização:** ao encerrar cada sessão, reescrever o bloco acima com o estado real. Nunca iniciar uma sessão sem ler este bloco primeiro.

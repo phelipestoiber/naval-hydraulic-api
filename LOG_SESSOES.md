@@ -47,6 +47,32 @@ Copiar o template abaixo, preencher, colar no topo da seção "Entradas" (ordem 
 
 ## Entradas
 
+### 2026-08-04 — v0.7.0 — Leis de Semelhança (VFD) e Diâmetro de Impulsor
+
+**Objetivo da sessão:** Implementar as Leis de Afinidade/Semelhança para ajuste de curva de bomba por variação de rotação ($N_2/N_1$) e rebaixamento de impulsor ($D_2/D_1$), além da variação de velocidade por Inversor de Frequência (VFD) por TDD estrito.
+
+**Feito:**
+- Criado [leis_semelhanca.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/motores/leis_semelhanca.py) aplicando as Leis de Afinidade para $Q_2$, $H_2$, $P_2$ e $\text{NPSHr}_2$, com emissão de alerta se o rebaixamento de impulsor exceder 20% ($D_2/D_1 < 0.80$)
+- Criado [inversor.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/motores/inversor.py) calculando a velocidade ajustada $N(f) = N_{\text{nom}} \cdot (f_{\text{op}}/f_{\text{nom}})$ e avaliando os alertas operacionais `ALERTA_FREQUENCIA_BAIXA` ($f_{\text{op}} < 30$ Hz) e `ALERTA_SOBREFREQUENCIA` ($f_{\text{op}} > 60$ Hz)
+- Criado [test_leis_semelhanca.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_leis_semelhanca.py) validando a variação de rotação $1750 \rightarrow 1400$ rpm ($T7.1$) e rebaixamento de impulsor $250 \rightarrow 225$ mm ($T7.2$)
+- Criado [test_inversor.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_inversor.py) validando operação do VFD a $45$ Hz ($T7.3$) e alertas a $20$ Hz e $65$ Hz ($T7.4$)
+
+**Por quê:** Concluir a Fase 3 (Motores, Consumos e Inversor de Frequência), permitindo a simulação do comportamento operacional da bomba sob modulação de frequência ou ajuste mecânico de rotor antes de disponibilizar as APIs REST FastAPI.
+
+**Deu certo:**
+- 59/59 testes unitários passando com 99% de cobertura global
+- Leis de Afinidade validadas: $Q_2 = 80\text{ m}^3/\text{h}$, $H_2 = 25.6\text{ m}$, $P_2 = 7.68\text{ kW}$ para redução de $20\%$ na rotação ($T7.1$)
+- Rebaixamento de impulsor validado: $Q_2 = 90\text{ m}^3/\text{h}$, $H_2 = 32.4\text{ m}$ para corte de $10\%$ no diâmetro ($T7.2$)
+- Operação em VFD ajustando rotação nominal para $1312.5\text{ rpm}$ a $45\text{ Hz}$ com status `OK` ($T7.3$)
+- Proteção térmica do motor disparada a $20\text{ Hz}$ (`ALERTA_FREQUENCIA_BAIXA`) ($T7.4$)
+
+**Deu errado / retrabalho:**
+- nada a registrar
+
+**Estado ao final:** 59/59 testes passando; 99% cobertura global; 0 bloqueios abertos
+
+---
+
 ### 2026-08-04 — v0.6.0 — Motor Elétrico, Rendimento Global e Consumo de Combustível
 
 **Objetivo da sessão:** Implementar o cálculo da potência hidráulica $P_{\text{hid}}$, potência no eixo da bomba $P_{\text{eixo}}$, potência elétrica $P_{\text{elet}}$, corrente nominal trifásica $I_{\text{nom}}$, rendimento global da cadeia de acionamento $\eta_{\text{global}}$ e consumo de combustível diesel por TDD estrito.
