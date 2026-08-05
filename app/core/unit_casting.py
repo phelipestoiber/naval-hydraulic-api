@@ -25,7 +25,7 @@ def realizar_unit_casting(payload: dict[str, Any]) -> tuple[SistemaSI, Rastreabi
     """
     # 1. Sanity Check — Unidade de Vazão
     unidade_vazao = payload.get("unidade_vazao", "m3h")
-    unidades_vazao_validas = ("m3h", "m3/h", "l/min", "l/s")
+    unidades_vazao_validas = ("m3h", "m3/h", "l/min", "l/s", "m3s")
     if unidade_vazao not in unidades_vazao_validas:
         raise ErroCalculo(
             codigo="UNIDADE_INVALIDA",
@@ -53,6 +53,7 @@ def realizar_unit_casting(payload: dict[str, Any]) -> tuple[SistemaSI, Rastreabi
         fator_vazao = "/ 1000"
         Q_m3s = vazao_bruta / 1000.0
     else:
+        fator_vazao = "1"
         Q_m3s = vazao_bruta
 
     # 3. Sanity Check — Diâmetro

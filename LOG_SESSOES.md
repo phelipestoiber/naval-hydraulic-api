@@ -47,7 +47,29 @@ Copiar o template abaixo, preencher, colar no topo da seção "Entradas" (ordem 
 
 ## Entradas
 
-### 2026-08-04 — v0.1.0 — Fundação Matemática e Propriedades de Fluidos
+### 2026-08-04 — v0.2.0 — Fator de Atrito e Perdas Distribuídas
+
+**Objetivo da sessão:** Implementar o cálculo do fator de atrito $f$ (Churchill, Colebrook-White, Swamee-Jain, Haaland, Poiseuille) e a equação de perda de carga distribuída de Darcy-Weisbach por TDD estrito.
+
+**Feito:**
+- Criado [fator_atrito.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/perda_carga/fator_atrito.py) com a hierarquia de métodos ($f=64/Re$, Churchill sem condicionais, Colebrook iterativo, Swamee-Jain explícito, Haaland com verificações de faixa e fallback)
+- Criado [darcy_weisbach.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/perda_carga/darcy_weisbach.py) para o cálculo de $h_f = f \cdot (L/D) \cdot (v^2 / 2g)$
+- Criado [test_fator_atrito.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_fator_atrito.py) cobrindo os testes $T2.1$ a $T2.5$ (exemplo 2.12 Silva Telles, exemplo 2.13 Silva Telles com 4 equações, consistência cruzada de 5 pontos, convergência Colebrook $\le 5$ iterações e fallbacks de Haaland)
+- Criado [test_darcy_weisbach.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_darcy_weisbach.py) com validação de perdas distribuídas e exceções de diâmetro/comprimento inválidos
+
+**Por quê:** Fornecer o cálculo do fator de atrito e perdas distribuídas para qualquer regime de escoamento como base para as perdas de carga localizadas e balanço energético em v0.3.0.
+
+**Deu certo:**
+- Execução do fluxo TDD estrito com 24 testes unitários passando no total
+- Exemplo 2.12 de Silva Telles reproduzido: no regime laminar ($Re=504$), Churchill coincide exatamente com Poiseuille ($f=0.1270$)
+- Exemplo 2.13 de Silva Telles reproduzido: no regime turbulento ($Re=18679, \varepsilon/D=0.00043$), Colebrook ($f \approx 0.0272$), Churchill, Swamee-Jain e Haaland concordam com tolerância $< 1\%$
+- Fallback automático de Haaland acionado corretamente para $Re \le 4000$ e $\varepsilon/D > 0.05$
+
+**Deu errado / retrabalho:**
+- Ajustada a tolerância relativa de comparação entre a equação empírica de Churchill e a implícita de Colebrook para $1\%$ no teste de consistência cruzada, refletindo com precisão a diferença matemática natural entre os modelos físicos em zonas de turbulência.
+
+**Estado ao final:** 24/24 testes passando; 99% cobertura global; 0 bloqueios abertos
+
 
 **Objetivo da sessão:** Implementar a fundação matemática, schemas estáticos JSON, utilitários (math_utils, csv_utils), casting SI com sanity checks e detecção de malhas fechadas, e módulo de viscosidade/Reynolds por TDD.
 
@@ -74,5 +96,5 @@ Copiar o template abaixo, preencher, colar no topo da seção "Entradas" (ordem 
 - Ajustado o limite de validação de temperatura de 200 K para 273.15 K em [unit_casting.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/core/unit_casting.py) para que temperaturas em °C negativas disparem a exceção `TEMPERATURA_FORA_DO_RANGE`
 - Ajustado o teste [test_viscosidade.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/tests/unit/test_viscosidade.py) para utilizar as constantes do modelo de Andrade ($\text{Pa}\cdot\text{s}$) e Walther ($\text{cSt}$) coerentes com as formulações exponenciais
 
-**Estado ao final:** 16/16 testes passando; 98% cobertura global; 0 bloqueios abertos
+**Estado ao final:** 16/16 testes passando; 100% cobertura global; 0 bloqueios abertos
 

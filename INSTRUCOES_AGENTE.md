@@ -8,15 +8,16 @@
 ## Estado Atual do Projeto
 
 ```
-Versão implementada:  v0.1.0
-Próxima versão:       v0.2.0
+Versão implementada:  v0.2.0
+Próxima versão:       v0.3.0
 Fase atual:           1 — Núcleo Hidráulico
 
-Testes passando:      16 / 16
-Testes pendentes:     2.1 → 2.5 (v0.2.0)
+Testes passando:      24 / 24
+Testes pendentes:     3.1 → 3.5 (v0.3.0)
+Cobertura global:     99%
 
 Bloqueios conhecidos: nenhum
-Última sessão:        2026-08-04 — v0.1.0 — Fundação Matemática e Propriedades de Fluidos
+Última sessão:        2026-08-04 — v0.2.0 — Fator de Atrito e Perdas Distribuídas
 ```
 
 **Instrução de atualização:** ao encerrar cada sessão, reescrever o bloco acima com o estado real. Nunca iniciar uma sessão sem ler este bloco primeiro.

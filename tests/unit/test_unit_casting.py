@@ -49,6 +49,15 @@ def test_casting_unidades_alternativas():
     si_ls, _ = realizar_unit_casting(payload_ls)
     assert si_ls.Q_m3s == pytest.approx(0.01, abs=1e-6)
 
+    payload_m3s = {
+        "vazao": 0.01,
+        "unidade_vazao": "m3s",
+        "diametro_mm": 100.0,
+        "temperatura_C": 20.0
+    }
+    si_m3s, _ = realizar_unit_casting(payload_m3s)
+    assert si_m3s.Q_m3s == pytest.approx(0.01, abs=1e-6)
+
 def test_sanity_checks_7_casos():
     """T1.2 — Sanity checks (7 casos) com ErrorResponse estruturado"""
     def check_erro(modificacao, codigo_esperado):

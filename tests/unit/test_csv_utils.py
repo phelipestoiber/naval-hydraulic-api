@@ -65,10 +65,14 @@ def test_csv_utils_10_casos_schema_d2():
     _, erros = validar_e_parsear_csv_curva(csv_valor_ausente.encode('utf-8'))
     assert any(e.codigo == "CURVA_CSV_VALOR_AUSENTE" for e in erros)
 
-    # 11. Erros extras de parse (colunas ausentes, eta/npsh inválidos)
+    # 11. Erros extras de parse (colunas ausentes, eta/npsh/Q/H inválidos)
     csv_colunas_faltando = "Q_m3h,H_m,eta_pct\n0\n50,40\n100,36\n"
     _, erros = validar_e_parsear_csv_curva(csv_colunas_faltando.encode('utf-8'))
     assert any(e.codigo == "CURVA_CSV_FORMATO_INVALIDO" for e in erros)
+
+    csv_q_texto = "Q_m3h,H_m\n0,42\ntexto,40\n100,36\n"
+    _, erros = validar_e_parsear_csv_curva(csv_q_texto.encode('utf-8'))
+    assert any(e.codigo == "CURVA_CSV_FORMATO_DECIMAL" for e in erros)
 
     csv_eta_invalido = "Q_m3h,H_m,eta_pct,NPSH_m\n0,42,abc,1.5\n50,40,60,xyz\n100,36,79,3.2\n"
     _, erros = validar_e_parsear_csv_curva(csv_eta_invalido.encode('utf-8'))
