@@ -8,16 +8,16 @@
 ## Estado Atual do Projeto
 
 ```
-Versão implementada:  v0.7.0
-Próxima versão:       v0.8.0
+Versão implementada:  v0.8.0
+Próxima versão:       v0.9.0
 Fase atual:           4 — APIs REST FastAPI e Schemas Pydantic
 
-Testes passando:      59 / 59
-Testes pendentes:     8.1 → 8.4 (v0.8.0)
+Testes passando:      71 / 71
+Testes pendentes:     9.1 → 9.4 (v0.9.0)
 Cobertura global:     99%
 
 Bloqueios conhecidos: nenhum
-Última sessão:        2026-08-04 — v0.7.0 — Leis de Semelhança (VFD) e Diâmetro de Impulsor
+Última sessão:        2026-08-04 — v0.8.0 — Schemas Pydantic, Serialização e Endpoints REST
 ```
 
 **Instrução de atualização:** ao encerrar cada sessão, reescrever o bloco acima com o estado real. Nunca iniciar uma sessão sem ler este bloco primeiro.

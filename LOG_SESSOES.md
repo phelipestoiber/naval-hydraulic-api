@@ -47,6 +47,40 @@ Copiar o template abaixo, preencher, colar no topo da seção "Entradas" (ordem 
 
 ## Entradas
 
+### 2026-08-04 — v0.8.0 — Schemas Pydantic, Serialização e Endpoints REST
+
+**Objetivo da sessão:** Implementar a camada API HTTP utilizando FastAPI, definir os schemas Pydantic de entrada/saída, criar os endpoints para fluidos, perda de carga, bombas, cavitação e motores, e configurar tratamento padronizado de exceções (`ErrorResponse` em HTTP 400 e 422) por TDD estrito.
+
+**Feito:**
+- Criados os schemas Pydantic em `app/schemas/`: [fluido.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/schemas/fluido.py), [perda_carga.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/schemas/perda_carga.py), [bomba.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/schemas/bomba.py), [cavitacao.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/schemas/cavitacao.py) e [motor.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/schemas/motor.py)
+- Criados os endpoints REST em `app/api/v1/endpoints/`:
+  - `POST /api/v1/fluidos/propriedades`
+  - `POST /api/v1/perda-carga/darcy-weisbach`
+  - `POST /api/v1/perda-carga/hazen-williams`
+  - `POST /api/v1/perda-carga/singularidades`
+  - `POST /api/v1/bombas/ponto-operacao`
+  - `POST /api/v1/cavitacao/npsh`
+  - `POST /api/v1/motores/dimensionamento`
+- Criado [router.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/api/v1/router.py) agregando todos os sub-roteadores sob o prefixo `/api/v1`
+- Criado [main.py](file:///C:/Users/afmn/Desktop/naval-hydraulic-api/app/main.py) com a instância FastAPI, suporte a CORS, rota `/health` e exception handlers estruturados para `ErroCalculo` (HTTP 400) e `RequestValidationError` (HTTP 422)
+- Criados 5 arquivos de testes de integração HTTP em `tests/integration/`: `test_api_fluidos.py`, `test_api_perda_carga.py`, `test_api_bombas.py`, `test_api_cavitacao.py` e `test_api_motores.py`
+
+**Por quê:** Iniciar a Fase 4 (Camada API), expondo todo o motor de cálculo hidráulico da aplicação através de endpoints REST acessíveis por clientes HTTP.
+
+**Deu certo:**
+- 71/71 testes (unitários + integração) passando com 99% de cobertura global
+- Endpoint `/api/v1/fluidos/propriedades` retornando vazão, Reynolds e regime ($T8.1$) com validação 422 para entradas inválidas
+- Endpoint `/api/v1/perda-carga/hazen-williams` disparando fallback automático para Darcy-Weisbach e retornando 200 OK com aviso estruturado para fluidos não-água ($T8.2$)
+- Endpoint `/api/v1/bombas/ponto-operacao` retornando Ponto de Operação ($T8.3$) e disparando HTTP 400 estruturado (`SEM_PONTO_OPERACAO_SHUT_OFF`) com diagnóstico quando $H_{\text{geo}} > H_{\text{shut\_off}}$
+- Endpoints de cavitação e motores dimensionando corretamente os componentes com 100% de cobertura de código API
+
+**Deu errado / retrabalho:**
+- nada a registrar
+
+**Estado ao final:** 71/71 testes passando; 99% cobertura global; 0 bloqueios abertos
+
+---
+
 ### 2026-08-04 — v0.7.0 — Leis de Semelhança (VFD) e Diâmetro de Impulsor
 
 **Objetivo da sessão:** Implementar as Leis de Afinidade/Semelhança para ajuste de curva de bomba por variação de rotação ($N_2/N_1$) e rebaixamento de impulsor ($D_2/D_1$), além da variação de velocidade por Inversor de Frequência (VFD) por TDD estrito.
