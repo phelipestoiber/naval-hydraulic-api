@@ -10,7 +10,7 @@ Este manual foi escrito especificamente para **Engenheiros Navais, Engenheiros M
 
 ### Por que esta ferramenta foi criada?
 No projeto de tubulações e plantas de bombeamento de embarcações (como rebocadores, navios mercantes, embarcações de apoio offshore PSV e embarcações militares), o cálculo manual ou via planilhas eletrônicas convencionais apresenta sérias limitações:
-1. **Negligência da Inclinação 3D**: Planilhas comuns calculam o sistema apenas em condição estática ("em prumo"). No mar, a embarcação sofre caturro (arfagem/pitch), balanço (rolamento/roll) e condições de avaria (alagamento assimétrico), alterando a altura estática do fluido e podendo causar **cavitação severa e perda de sucção da bomba**.
+1. **Negligência da Inclinação 3D**: Planilhas comuns calculam o sistema apenas em condição estática ("em prumo"). No mar, a embarcação sofre Trim (arfagem/pitch), balanço (rolamento/roll) e condições de avaria (alagamento assimétrico), alterando a altura estática do fluido e podendo causar **cavitação severa e perda de sucção da bomba**.
 2. **Erros em Curvas de Bombas**: O uso de interpolação polinomial simples (spline cúbica) em curvas planas de bombas pode criar oscilações numéricas falsas (*overshoot*), prevendo pontos de operação inexistentes ou irreais.
 3. **Não-Conformidade Normativa**: O não cumprimento automático dos limites de velocidade de água do mar impostos por Sociedades Classificadoras (Bureau Veritas, Lloyd's Register, DNV, ABS) pode gerar corrosão-erosão precoce em tubulações de cuproníquel ou sedimentação na sucção.
 
@@ -63,9 +63,9 @@ O sistema analisa uma instalação de tubulação completa (da tomada de água n
                                     │
                                     ▼
   5. VARREDURA 3D DE INCLINAÇÃO NAVAL (9 CONDIÇÕES)
-     ↳ Aplica rotação espacial R(θ, φ) para Caturro (pitch) e Banda (roll).
+     ↳ Aplica rotação espacial R(θ, φ) para Trim (pitch) e Banda (roll).
      ↳ Calcula o NPSH Disponível (NPSHa) em cada uma das 9 posições navais.
-     ↳ Identifica a Condição Crítica de Avaria (ex: +10° caturro, +22.5° banda).
+     ↳ Identifica a Condição Crítica de Avaria (ex: +10° Trim, +22.5° banda).
                                     │
                                     ▼
   6. VERIFICAÇÃO NORMATIVA E DIMENSIONAMENTO ELETROMECÂNICO
@@ -111,7 +111,7 @@ Um navio mercante necessita dimensionar o sistema de resfriamento central de ág
 | **Número de Reynolds (Sucção)** | $287.000$ | Regime Plenamente Turbulento ($Re > 4000$). |
 | **Altura Manométrica Total** | $8.45 \text{ m}$ | Carga estática ($3.40\text{m}$) + Perdas distribuídas/localizadas ($5.05\text{m}$). |
 | **NPSH Disponível (Prumo)** | $4.85 \text{ m}$ | ✅ **Seguro**: Maior que o $\text{NPSHr}$ da bomba ($3.20 \text{ m}$) + margem de $0.5 \text{ m}$. |
-| **NPSH Disponível (Avaria BB)** | $4.43 \text{ m}$ | ✅ **Seguro em Avaria**: Mesmo com caturro de $10^\circ$ e banda de $22.5^\circ$, o $\text{NPSHa}$ permanece acima de $3.70 \text{ m}$. |
+| **NPSH Disponível (Avaria BB)** | $4.43 \text{ m}$ | ✅ **Seguro em Avaria**: Mesmo com Trim de $10^\circ$ e banda de $22.5^\circ$, o $\text{NPSHa}$ permanece acima de $3.70 \text{ m}$. |
 | **Velocidade Específica ($N_s$)** | $63.7$ | Classificação física: **Bomba Centrífuga Mista**. |
 | **Motor Elétrico Requerido** | **7.5 CV** (ABNT) | Potência hidráulica $= 2.80 \text{ kW} \implies P_{\text{eixo}} = 3.54 \text{ kW}$. Com $25\%$ de margem naval $\implies 4.43 \text{ kW} = 6.02 \text{ CV} \implies$ Comercial **7.5 CV**. |
 | **STATUS GERAL** | **`OK`** | Instalação aprovada operacionalmente. |
@@ -139,7 +139,7 @@ Transferência de óleo combustível pesado (HFO) aquecido ou óleo diesel marin
 ### Caso 3: Esgoto de Porão e Lastro sob Avaria Extrema
 
 #### ⚓ Cenário Real:
-Dimensionamento da bomba de esgoto da praça de máquinas. Em uma situação de emergência (colisão ou rasgo no casco), a embarcação adquire uma inclinação permanente de **$10^\circ$ de caturro (posição embicada) e $22.5^\circ$ de adernamento para o bordo de bombordo (BB)**.
+Dimensionamento da bomba de esgoto da praça de máquinas. Em uma situação de emergência (colisão ou rasgo no casco), a embarcação adquire uma inclinação permanente de **$10^\circ$ de Trim (posição embicada) e $22.5^\circ$ de adernamento para o bordo de bombordo (BB)**.
 
 ```
  CONDIÇÃO DE PRUMO (0°, 0°)              CONDIÇÃO DE AVARIA EXTREMA (+10°, +22.5°)
@@ -155,8 +155,8 @@ O sistema calcula a cota estática efetiva do ponto de captação para cada uma 
 
 ```
   [1] Prumo (0°, 0°)                   ──> NPSHa = 4.85 m (Status: OK)
-  [2] Caturro a Vante (+5°, 0°)        ──> NPSHa = 4.75 m (Status: OK)
-  [3] Caturro a Ré (-5°, 0°)           ──> NPSHa = 4.90 m (Status: OK)
+  [2] Trim a Vante (+5°, 0°)        ──> NPSHa = 4.75 m (Status: OK)
+  [3] Trim a Ré (-5°, 0°)           ──> NPSHa = 4.90 m (Status: OK)
   [4] Banda BE (0°, +15°)              ──> NPSHa = 4.65 m (Status: OK)
   [5] Banda BB (0°, -15°)              ──> NPSHa = 4.60 m (Status: OK)
   [6] Combinado BE/Vante (+5°, +15°)   ──> NPSHa = 4.57 m (Status: OK)
@@ -285,7 +285,7 @@ $$\text{onde: } A = \left[ 2.457 \cdot \ln \left( \frac{1}{\left( \frac{7}{Re} \
 
 ### 5.2 Rotação 3D da Cota Estática — Matriz de Inclinação
 
-Dado o vetor posição $\vec{P} = (x, y, z)$ de um ponto de tubulação em prumo, sua nova cota $z'$ sob caturro $\theta$ (pitch) e banda $\phi$ (roll) é calculada por:
+Dado o vetor posição $\vec{P} = (x, y, z)$ de um ponto de tubulação em prumo, sua nova cota $z'$ sob Trim $\theta$ (pitch) e banda $\phi$ (roll) é calculada por:
 
 $$z'(\theta, \phi) = -x \cdot \sin\theta \cdot \cos\phi + y \cdot \sin\phi + z \cdot \cos\theta \cdot \cos\phi$$
 
