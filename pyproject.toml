@@ -1,7 +1,11 @@
 [project]
 name = "naval-hydraulic-api"
-version = "0.1.0"
+version = "1.0.0"
 requires-python = ">=3.11"
+license = { text = "AGPL-3.0-or-later" }
+classifiers = [
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)"
+]
 
 dependencies = [
     "fastapi>=0.111.0",
@@ -30,8 +34,3 @@ dev = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
-
-license = { text = "AGPL-3.0-or-later" }
-classifiers = [
-    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)"
-]

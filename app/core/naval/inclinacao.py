@@ -3,8 +3,8 @@ from typing import Any
 
 CONDICOES_INCLINACAO_BV = [
     {"nome": "prumo", "theta_deg": 0.0, "phi_deg": 0.0, "delta_z_m": 0.0},
-    {"nome": "caturro_vante", "theta_deg": 5.0, "phi_deg": 0.0, "delta_z_m": -0.10},
-    {"nome": "caturro_re", "theta_deg": -5.0, "phi_deg": 0.0, "delta_z_m": 0.05},
+    {"nome": "trim_vante", "theta_deg": 5.0, "phi_deg": 0.0, "delta_z_m": -0.10},
+    {"nome": "trim_re", "theta_deg": -5.0, "phi_deg": 0.0, "delta_z_m": 0.05},
     {"nome": "banda_BE", "theta_deg": 0.0, "phi_deg": 15.0, "delta_z_m": -0.20},
     {"nome": "banda_BB", "theta_deg": 0.0, "phi_deg": -15.0, "delta_z_m": -0.25},
     {"nome": "combinado_BE_vante", "theta_deg": 5.0, "phi_deg": 15.0, "delta_z_m": -0.28},
@@ -19,7 +19,7 @@ def varrer_9_condicoes(
     classificadora: str = "BV"
 ) -> dict[str, Any]:
     """
-    Executa a varredura das 9 condições nominais de inclinação naval (prumo, caturro, banda, avaria).
+    Executa a varredura das 9 condições nominais de inclinação naval (prumo, trim, banda, avaria).
     Calcula a variação do NPSH disponível para cada condição espacial 3D.
     """
     varredura = []
