@@ -93,7 +93,13 @@ source .venv/bin/activate
 Com o ambiente `(.venv)` ativado, instale todas as bibliotecas de cálculo executando:
 
 ```powershell
-pip install -r pyproject.toml
+# Instalar dependências (Escolha uma das duas formas):
+
+# Forma 1 (Recomendada via pyproject.toml):
+pip install .
+
+# Forma 2 (Via requirements.txt):
+pip install -r requirements.txt
 ```
 *(Aguarde alguns segundos até que a mensagem de instalação concluída apareça).*
 
