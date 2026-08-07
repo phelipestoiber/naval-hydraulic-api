@@ -4,7 +4,7 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688.svg)](https://fastapi.tiangolo.com/)
 [![Tests](https://img.shields.io/badge/tests-85%20passed-brightgreen.svg)]()
 [![Coverage](https://img.shields.io/badge/coverage-98%25-brightgreen.svg)]()
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)]()
+[![License](https://img.shields.io/badge/license-AGPL--3.0-blue.svg)](LICENSE)
 
 Motor de cálculo hidráulico e dimensionamento eletromecânico de plantas de bombeamento navais, com varredura espacial 3D de inclinação estática/dinâmica (prumo, Trim, banda, avaria), verificação de normas de sociedades classificadoras (BV, LR, ABS, DNV) e API REST pública baseada em FastAPI.
 
@@ -246,4 +246,4 @@ naval-hydraulic-api/
 
 ## 📄 Licença
 
-Este projeto é distribuído sob a licença **MIT**. Veja o arquivo `LICENSE` para mais detalhes.
+Este projeto é distribuído sob a licença **GNU Affero General Public License v3.0 (AGPL-3.0)**. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
